@@ -4,15 +4,19 @@ import {
   PageHeader,
   PageHeaderDescription,
   PageHeaderHeading,
+  PageHeaderNotifier,
 } from "@/components/page-header"
 import { buttonVariants } from "@/components/ui/button"
 import { siteConfig } from "@/config/site"
-import { cn } from "@/lib/utils"
+import {
+  cn,
+  currentMonthFirstDate,
+  currentMonthLastDate,
+  randomDate,
+} from "@/lib/utils"
 import Link from "next/link"
 import { CalendarHeatmap } from "@/components/ui/calendar-heatmap"
 import { Icons } from "@/components/icons"
-
-const fadeUpClassname = "lg:motion-safe:animate-fade-up"
 
 async function getRepoStarCount() {
   const res = await fetch(`https://api.github.com/repos/${siteConfig.name}`)
@@ -32,39 +36,43 @@ export default async function IndexPage() {
   return (
     <div className="container relative flex-1 flex flex-col justify-center items-center">
       <PageHeader>
-        <PageHeaderHeading className={cn(fadeUpClassname)}>
+        <PageHeaderNotifier>Work in progress 🚧</PageHeaderNotifier>
+
+        <PageHeaderHeading>
           Modern alternative to primitive react heatmaps.
         </PageHeaderHeading>
 
         <CalendarHeatmap
           datesStylingMap={{
             low: [
-              [new Date()],
+              [...Array(3)].map((dt) =>
+                randomDate(currentMonthFirstDate(), currentMonthLastDate())
+              ),
               "text-white hover:text-white bg-green-400 hover:bg-green-400",
             ],
+            mid: [
+              [...Array(3)].map((dt) =>
+                randomDate(currentMonthFirstDate(), currentMonthLastDate())
+              ),
+              "text-white hover:text-white bg-green-500 hover:bg-green-500",
+            ],
+            high: [
+              [...Array(3)].map((dt) =>
+                randomDate(currentMonthFirstDate(), currentMonthLastDate())
+              ),
+              "text-white hover:text-white bg-green-700 hover:bg-green-700",
+            ],
           }}
-          className={cn(
-            fadeUpClassname,
-            "lg:motion-safe:[animation-delay:1000ms]"
-          )}
         />
 
-        <PageHeaderDescription
-          className={cn(
-            fadeUpClassname,
-            "lg:motion-safe:[animation-delay:3000ms]"
-          )}
-        >
-          One-time password input component for React. Accessible. Unstyled.
-          Customizable. Open Source.
+        <PageHeaderDescription>
+          Showcase Github streaks. Present climate stats. <br></br>
+          Convey more with less.
+          <br></br>
+          Unstyled. Customizable. Open Source.
         </PageHeaderDescription>
 
-        <PageActions
-          className={cn(
-            fadeUpClassname,
-            "lg:motion-safe:[animation-delay:3000ms]"
-          )}
-        >
+        <PageActions>
           <div className={buttonVariants({ variant: "outline" })}>
             <div className="text-muted-foreground pr-1">
               <span className="text-foreground">npm</span> install

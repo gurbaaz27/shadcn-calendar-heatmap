@@ -17,12 +17,13 @@ export const metadata: Metadata = {
   description: siteConfig.description,
   keywords: [
     "React",
-    "one-time-code",
-    "Input",
+    "Heatmap",
+    "Calendar",
     "Next.js",
     "Tailwind CSS",
     "Server Components",
     "Accessible",
+    "Shadcn",
   ],
   authors: [
     {

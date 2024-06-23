@@ -17,3 +17,19 @@ export function splitRecord<U, V>(
     [{} as Record<string, U>, {} as Record<string, V>]
   )
 }
+
+export function randomDate(start: Date, end: Date) {
+  return new Date(
+    start.getTime() + Math.random() * (end.getTime() - start.getTime())
+  )
+}
+
+export function currentMonthFirstDate() {
+  const date = new Date()
+  return new Date(date.getFullYear(), date.getMonth(), 1)
+}
+
+export function currentMonthLastDate() {
+  const date = new Date()
+  return new Date(date.getFullYear(), date.getMonth() + 1, 0)
+}

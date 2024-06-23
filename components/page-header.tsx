@@ -1,3 +1,4 @@
+import { useTheme } from "next-themes"
 import { cn } from "../lib/utils"
 
 function PageHeader({
@@ -8,13 +9,31 @@ function PageHeader({
   return (
     <section
       className={cn(
-        "mx-auto flex max-w-[500px] flex-col items-center gap-2 py-8 md:py-12 md:pb-8 lg:py-24 lg:pb-20",
+        "mx-auto flex max-w-[800px] flex-col items-center gap-2 py-8 md:py-12 md:pb-8 lg:py-24 lg:pb-20",
         className
       )}
       {...props}
     >
       {children}
     </section>
+  )
+}
+
+function PageHeaderNotifier({
+  className,
+  ...props
+}: React.HTMLAttributes<HTMLHeadingElement>) {
+  return (
+    <h1
+      className={cn(
+        "text-center text-xs font-semibold leading-tight md:text-sm lg:leading-[1.1] min-w-fit backdrop-blur-[2px] p-2 rounded mb-2",
+        className
+      )}
+      style={{
+        background: "rgba(99, 86, 36, 0.1)",
+      }}
+      {...props}
+    />
   )
 }
 
@@ -63,4 +82,10 @@ function PageActions({
   )
 }
 
-export { PageHeader, PageHeaderHeading, PageHeaderDescription, PageActions }
+export {
+  PageHeader,
+  PageHeaderNotifier,
+  PageHeaderHeading,
+  PageHeaderDescription,
+  PageActions,
+}
