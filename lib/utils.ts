@@ -29,7 +29,7 @@ export function currentMonthFirstDate() {
   return new Date(date.getFullYear(), date.getMonth(), 1)
 }
 
-export function currentMonthLastDate() {
+export function currentMonthLastDate(months: number) {
   const date = new Date()
-  return new Date(date.getFullYear(), date.getMonth() + 1, 0)
+  return new Date(date.getFullYear(), date.getMonth() + months, 0)
 }

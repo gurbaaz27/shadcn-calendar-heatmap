@@ -1,4 +1,3 @@
-import { useTheme } from "next-themes"
 import { cn } from "../lib/utils"
 
 function PageHeader({
@@ -59,7 +58,7 @@ function PageHeaderDescription({
   return (
     <p
       className={cn(
-        "max-w-[750px] text-center text-lg text-muted-foreground sm:text-xl text-pretty",
+        "max-w-[750px] text-center text-base text-muted-foreground sm:text-lg text-pretty",
         className
       )}
       {...props}
