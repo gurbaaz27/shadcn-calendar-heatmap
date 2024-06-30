@@ -72,7 +72,8 @@ export default async function IndexPage() {
             "lg:motion-safe:[animation-delay:3000ms]"
           )}
         >
-          Showcase Github streaks. Present climate stats. <br></br>
+          Showcase Github streaks. Visualise user growth. Understand global
+          warming trends. <br></br>
           Convey more with less.
           <br></br>
           Unstyled. Customizable. Open Source.
