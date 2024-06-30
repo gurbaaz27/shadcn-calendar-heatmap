@@ -2,15 +2,20 @@ import "./globals.css"
 import type { Metadata } from "next"
 import { cn } from "@/lib/utils"
 import { GeistSans } from "geist/font/sans"
+import { JetBrains_Mono } from "next/font/google"
 import { SiteHeader } from "@/components/site-header"
 import { SiteFooter } from "@/components/site-footer"
 import { Toaster } from "@/components/ui/sonner"
-import DarkThemeProvider from "@/providers/ThemeProvider"
 import { siteConfig } from "@/config/site"
+
+export const fontMono = JetBrains_Mono({
+  subsets: ["latin"],
+  variable: "--font-mono",
+})
 
 export const metadata: Metadata = {
   title: {
-    default: siteConfig.name,
+    default: siteConfig.title,
     template: `%s - ${siteConfig.name}`,
   },
   metadataBase: new URL(siteConfig.url),
@@ -75,13 +80,11 @@ export default function RootLayout({
           GeistSans.className
         )}
       >
-        <DarkThemeProvider>
-          <div className="relative flex min-h-[100dvh] flex-col bg-background">
-            <SiteHeader />
-            <main className="flex-1 flex flex-col">{children}</main>
-            <SiteFooter />
-          </div>
-        </DarkThemeProvider>
+        <div className="relative flex min-h-[100dvh] flex-col bg-background">
+          <SiteHeader />
+          <main className="flex-1 flex flex-col">{children}</main>
+          <SiteFooter />
+        </div>
         <Toaster />
       </body>
     </html>
