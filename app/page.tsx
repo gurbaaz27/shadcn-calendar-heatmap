@@ -155,10 +155,10 @@ export default async function IndexPage() {
             "lg:motion-safe:[animation-delay:4000ms]"
           )}
           variantClassnames={Heatmap}
-          weightedDates={HeatmapDatesWeight.map((wgt) => ({
-            date: randomDate(currentMonthFirstDate(), currentMonthLastDate()),
-            weight: wgt,
-          }))}
+          weightedDates={[
+            { date: new Date('July 1, 2024'), weight: 2 }
+            
+          ]}
         />
 
         <PageHeaderHeading
