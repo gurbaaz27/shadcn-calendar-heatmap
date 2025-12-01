@@ -70,7 +70,7 @@ function categorizeDatesPerVariant(
 
   const minNumber = sortedEntries[0].weight
   const maxNumber = sortedEntries[sortedEntries.length - 1].weight
-  const range = (maxNumber - minNumber) / noOfVariants
+  const range = minNumber == maxNumber ? 1 : (maxNumber - minNumber) / noOfVariants;
 
   sortedEntries.forEach((entry) => {
     const category = Math.min(
