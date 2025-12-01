@@ -1,0 +1,181 @@
+# shadcn-calendar-heatmap
+
+> A customizable calendar heatmap component built on top of react-day-picker, following shadcn/ui patterns. Accessible, unstyled by default, and fully customizable with Tailwind CSS.
+
+## Overview
+
+shadcn-calendar-heatmap is a React component that transforms the DayPicker calendar into a heatmap visualization. It allows you to display dates with varying intensities using custom color variants - perfect for GitHub contribution graphs, temperature heatmaps, activity tracking, and more.
+
+## Installation
+
+The component is designed to be copied directly into your project following the shadcn/ui philosophy. Copy the component from:
+https://github.com/gurbaaz27/shadcn-calendar-heatmap/blob/main/components/ui/calendar-heatmap.tsx
+
+### Dependencies
+
+- react-day-picker (^8.10.1)
+- tailwind-merge
+- class-variance-authority
+- lucide-react (for icons)
+
+## Component API
+
+### CalendarHeatmap Props
+
+The component extends all props from `react-day-picker`'s DayPicker, plus:
+
+| Prop | Type | Required | Description |
+|------|------|----------|-------------|
+| `variantClassnames` | `string[]` | Yes | Array of Tailwind CSS classes for each intensity level |
+| `datesPerVariant` | `Date[][]` | One of these | 2D array where each inner array contains dates for that variant |
+| `weightedDates` | `WeightedDateEntry[]` | One of these | Array of `{ date: Date, weight: number }` objects |
+| `numberOfMonths` | `number` | No | Number of months to display (default: 1) |
+| `showOutsideDays` | `boolean` | No | Show days from adjacent months (default: true) |
+
+**Note:** You must provide either `datesPerVariant` OR `weightedDates`, not both.
+
+### WeightedDateEntry Type
+
+```typescript
+type WeightedDateEntry = {
+  date: Date
+  weight: number
+}
+```
+
+## Usage Examples
+
+### Basic GitHub-style Contribution Graph
+
+```tsx
+import { CalendarHeatmap } from "@/components/ui/calendar-heatmap"
+
+<CalendarHeatmap
+  variantClassnames={[
+    "text-white hover:text-white bg-green-400 hover:bg-green-400",
+    "text-white hover:text-white bg-green-500 hover:bg-green-500",
+    "text-white hover:text-white bg-green-700 hover:bg-green-700",
+  ]}
+  datesPerVariant={[
+    [new Date('Jan 1, 2024'), new Date('Jan 15, 2024')],  // Low intensity
+    [new Date('Jun 12, 2024'), new Date('July 1, 2024')], // Medium intensity
+    [new Date('Jan 19, 2024'), new Date('Apr 14, 2024')], // High intensity
+  ]}
+/>
+```
+
+### Using Weighted Dates (Auto-categorization)
+
+When you have numeric data associated with dates, use `weightedDates`. The component automatically categorizes dates into variants based on their weights:
+
+```tsx
+<CalendarHeatmap
+  variantClassnames={[
+    "text-white hover:text-white bg-blue-300 hover:bg-blue-300",
+    "text-white hover:text-white bg-green-500 hover:bg-green-500",
+    "text-white hover:text-white bg-amber-400 hover:bg-amber-400",
+    "text-white hover:text-white bg-red-700 hover:bg-red-700",
+  ]}
+  weightedDates={[
+    { date: new Date('Jan 1, 2024'), weight: 2 },
+    { date: new Date('Jan 15, 2024'), weight: 1.5 },
+    { date: new Date('Jun 12, 2024'), weight: 8 },
+    { date: new Date('July 1, 2024'), weight: 5 },
+    { date: new Date('Jan 19, 2024'), weight: 6 },
+    { date: new Date('Apr 19, 2024'), weight: 13.5 },
+  ]}
+/>
+```
+
+### Multi-month Display
+
+```tsx
+<CalendarHeatmap
+  numberOfMonths={3}
+  variantClassnames={[
+    "text-white hover:text-white bg-green-400 hover:bg-green-400",
+    "text-white hover:text-white bg-green-500 hover:bg-green-500",
+    "text-white hover:text-white bg-green-700 hover:bg-green-700",
+  ]}
+  datesPerVariant={[
+    [/* dates for variant 0 */],
+    [/* dates for variant 1 */],
+    [/* dates for variant 2 */],
+  ]}
+/>
+```
+
+### Rainbow Variant Example
+
+```tsx
+const Rainbow = [
+  "text-white hover:text-white bg-violet-400 hover:bg-violet-400",
+  "text-white hover:text-white bg-indigo-400 hover:bg-indigo-400",
+  "text-white hover:text-white bg-blue-400 hover:bg-blue-400",
+  "text-white hover:text-white bg-green-400 hover:bg-green-400",
+  "text-white hover:text-white bg-yellow-400 hover:bg-yellow-400",
+  "text-white hover:text-white bg-orange-400 hover:bg-orange-400",
+  "text-white hover:text-white bg-red-400 hover:bg-red-400",
+]
+
+<CalendarHeatmap
+  numberOfMonths={2}
+  variantClassnames={Rainbow}
+  datesPerVariant={rainbowDates}
+/>
+```
+
+## How It Works
+
+1. **Variant Classes**: Each string in `variantClassnames` represents a color/style intensity level. The component creates DayPicker modifiers for each variant.
+
+2. **Date Mapping**: 
+   - With `datesPerVariant`: Dates in the first array get the first variant class, second array gets second class, etc.
+   - With `weightedDates`: The component sorts dates by weight, divides the range into equal segments based on the number of variants, and assigns each date to its corresponding variant.
+
+3. **Styling**: The component uses Tailwind CSS classes. Include both normal and hover states in your variant classes for consistent interaction feedback.
+
+## Customization
+
+### Custom Styling
+
+Override default calendar styles via the `classNames` prop:
+
+```tsx
+<CalendarHeatmap
+  variantClassnames={[...]}
+  datesPerVariant={[...]}
+  classNames={{
+    months: "flex flex-col",
+    month: "space-y-2",
+    caption: "text-lg font-bold",
+    // ... other DayPicker classNames
+  }}
+/>
+```
+
+### Additional Props
+
+Since the component extends DayPicker, you can use any DayPicker prop:
+
+```tsx
+<CalendarHeatmap
+  variantClassnames={[...]}
+  datesPerVariant={[...]}
+  fromDate={new Date('2024-01-01')}
+  toDate={new Date('2024-12-31')}
+  disabled={[new Date('2024-07-04')]}
+  onDayClick={(day) => console.log(day)}
+/>
+```
+
+## Links
+
+- Demo: https://shadcn-calendar-heatmap.vercel.app
+- GitHub: https://github.com/gurbaaz27/shadcn-calendar-heatmap
+- Component Source: https://github.com/gurbaaz27/shadcn-calendar-heatmap/blob/main/components/ui/calendar-heatmap.tsx
+
+## License
+
+MIT
+
