@@ -18,6 +18,9 @@ import { CalendarHeatmap } from "@/components/ui/calendar-heatmap"
 import { Icons } from "@/components/icons"
 import { Star } from "lucide-react"
 import { ExampleCode } from "./(components)/example-code"
+import { CopyLlmsButton } from "./(components)/copy-llms-button"
+import { readFile } from "fs/promises"
+import path from "path"
 import {
   GithubStreak,
   GithubStreakDates,
@@ -44,6 +47,10 @@ async function getRepoStarCount() {
 
 export default async function IndexPage() {
   const starCount = await getRepoStarCount()
+  const llmsContent = await readFile(
+    path.join(process.cwd(), "public", "llms.txt"),
+    "utf-8"
+  )
 
   return (
     <div className="container relative flex-1 flex flex-col justify-center items-center">
@@ -102,6 +109,7 @@ export default async function IndexPage() {
               <div>{starCount}</div>
             </div>
           </Link>
+          <CopyLlmsButton content={llmsContent} />
         </PageActions>
       </PageHeader>
 
