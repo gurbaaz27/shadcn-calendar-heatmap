@@ -88,6 +88,7 @@ function CalendarHeatmap({
   datesPerVariant,
   weightedDates,
   className,
+  components,
   classNames,
   showOutsideDays = true,
   ...props
@@ -146,6 +147,7 @@ function CalendarHeatmap({
       components={{
         IconLeft: ({ ...props }) => <ChevronLeft className="h-4 w-4" />,
         IconRight: ({ ...props }) => <ChevronRight className="h-4 w-4" />,
+        ...components,
       }}
       {...props}
     />
