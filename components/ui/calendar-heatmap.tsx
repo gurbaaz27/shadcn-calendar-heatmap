@@ -89,6 +89,8 @@ function CalendarHeatmap({
   weightedDates,
   className,
   classNames,
+  modifiers: extendModifiers,
+  modifiersClassNames: extendModifierClassNames,
   showOutsideDays = true,
   ...props
 }: CalendarProps) {
@@ -105,8 +107,8 @@ function CalendarHeatmap({
 
   return (
     <DayPicker
-      modifiers={modifiers}
-      modifiersClassNames={modifiersClassNames}
+      modifiers={{ ...modifiers, ...extendModifiers }}
+      modifiersClassNames={{ ...modifiersClassNames, ...extendModifierClassNames }}
       showOutsideDays={showOutsideDays}
       className={cn("p-3", className)}
       classNames={{
